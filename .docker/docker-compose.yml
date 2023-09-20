@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:alpine
+    container_name: business_manager_db
+    environment:
+      POSTGRES_DB: business_manager
+      POSTGRES_PASSWORD: db_pass
+      POSTGRES_USER: db_user
+    ports:
+      - 6001:5432
+    restart: on-failure:3
+
+  redis:
+    image: redis
+    command: redis-server --requirepass redis_pass
+    ports:
+      - '6002:6379'
