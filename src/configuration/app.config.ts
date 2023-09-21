@@ -11,4 +11,13 @@ export class AppConfig {
 
   @Environment('APP_NAME', 'Business-Manager-Api')
   name: string;
+
+  @Option({ options: ['CLI', 'SERVER'] })
+  @Environment('MODE', 'SERVER')
+  mode: APP_MODE;
+}
+
+export enum APP_MODE {
+  CLI = 'CLI',
+  SERVER = 'SERVER',
 }
