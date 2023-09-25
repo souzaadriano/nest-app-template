@@ -1,0 +1,3 @@
+export enum LOG_TRIGGER {
+  REQUEST_USER = 'REQUEST_USER',
+}
