@@ -10,6 +10,6 @@ export class RedisConfig {
   @Environment('REDIS_PASSWORD')
   password: string;
 
-  @Environment('REDIS_DB')
+  @Environment('REDIS_DATABASE', 0)
   db: number;
 }
