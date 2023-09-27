@@ -8,7 +8,7 @@ show-containers:
 	docker compose -f .setup/docker/docker-compose.yml ps
 
 schema:
-	@bash ./scripts/generate-schema.sh
+	@bash ./database/scripts/generate-schema.sh
 
 migrations:
 	@bash yarn migrations:up

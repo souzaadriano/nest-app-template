@@ -17,6 +17,6 @@ export class LoggerService implements OnModuleInit, ILoggerService {
   }
 
   log(log: Log) {
-    this._pino.info(`[${log.context}]`, log.data());
+    this._pino.info(log.data());
   }
 }

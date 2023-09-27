@@ -1,6 +1,7 @@
 import { DateTime } from '../class/date-time/date-time.class';
 import { TJsonValue } from '../types/json-document.type';
 import { EXCEPTION_CODE } from './exception-code.enum';
+import { TExcecptionReason } from './exception.type';
 
 export abstract class AbstractException extends Error {
   private readonly _forbbidenProperties = new Set(['_issuedAt', '_message', '_name', '_trace', '_code']);
@@ -20,6 +21,14 @@ export abstract class AbstractException extends Error {
 
   get<T extends TJsonValue = TJsonValue>(key: string): T | undefined {
     return this._details.get(key) as T | undefined;
+  }
+
+  setReason(reasons: TExcecptionReason[]) {
+    this.set('_reasons', reasons);
+  }
+
+  getReason(): TExcecptionReason[] | undefined {
+    return this.get('_reasons');
   }
 
   details() {

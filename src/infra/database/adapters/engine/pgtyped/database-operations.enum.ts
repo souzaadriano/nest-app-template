@@ -1,0 +1,7 @@
+export enum DATABASE_OPERATION {
+  INSERT = 'INSERT',
+  DELETE = 'DELETE',
+  UPDATE = 'UPDATE',
+  SELECT = 'SELECT',
+  UPSERT = 'UPSERT',
+}
