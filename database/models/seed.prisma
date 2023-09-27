@@ -1,8 +1,0 @@
-model Seeds {
-    name      String
-    createdAt DateTime
-    addedAt   DateTime
-
-    @@unique([name, createdAt])
-    @@map("__seeds")
-}

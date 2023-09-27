@@ -6,25 +6,3 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
-model Seeds {
-  name      String
-  createdAt DateTime
-  addedAt   DateTime
-
-  @@unique([name, createdAt])
-  @@map("__seeds")
-}
-
-model Users {
-  id        String    @id
-  name      String
-  email     String    @unique
-  hash      String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now())
-  deletedAt DateTime?
-
-  @@index([email])
-  @@map("users")
-}
