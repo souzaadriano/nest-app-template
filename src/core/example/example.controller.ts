@@ -1,6 +1,6 @@
-import { LoggerService } from '@/modules/logger/services/logger-service.adapter';
-import { RequestHandler } from '@/modules/rest/decorators/request-handler.decorator';
-import { RestHandler } from '@/modules/rest/handlers/rest.handler';
+import { LoggerService } from '@/infra/logger/services/logger-service.adapter';
+import { RequestHandler } from '@/infra/rest/decorators/request-handler.decorator';
+import { RestHandler } from '@/infra/rest/handlers/rest.handler';
 import { Controller, Post } from '@nestjs/common';
 import { ExampleSchema } from './schemas/example.schema';
 import { CheckParamsUseCase } from './use-cases/check-params.use-case';

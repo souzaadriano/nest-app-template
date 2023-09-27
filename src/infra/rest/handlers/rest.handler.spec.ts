@@ -1,4 +1,4 @@
-import { LoggerService } from '@/modules/logger/services/logger-service.adapter';
+import { LoggerService } from '@/infra/logger/services/logger-service.adapter';
 import { Type } from 'class-transformer';
 import { IsNumber, IsObject, IsString, ValidateNested } from 'class-validator';
 import { Request, Response } from 'express';

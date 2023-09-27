@@ -1,7 +1,7 @@
 import { Log } from '@/core/shared/class/log/log.class';
 import { IUseCase, TStandardInput } from '@/core/shared/contracts/use-case.contract';
 import { NormalizeException } from '@/core/shared/exception/exception.normalize';
-import { LoggerService } from '@/modules/logger/services/logger-service.adapter';
+import { LoggerService } from '@/infra/logger/services/logger-service.adapter';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
 import { ClassConstructor } from 'environment-variables-decorator/dist/helpers/class-constructor.type';
