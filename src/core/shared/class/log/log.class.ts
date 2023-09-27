@@ -15,13 +15,15 @@ export class Log {
   readonly createdAt: DateTime;
   readonly context: string;
   readonly trigger: LOG_TRIGGER;
+  readonly isMainContext: boolean;
 
-  constructor(context: string, trigger: LOG_TRIGGER, pid: ProcessId) {
+  constructor(context: string, trigger: LOG_TRIGGER, pid: ProcessId, isMainContext = true) {
     this.createdAt = DateTime.now();
     this._stopwatch.start(this.createdAt);
     this.pid = pid;
     this.context = context;
     this.trigger = trigger;
+    this.isMainContext = isMainContext;
   }
 
   static create(context: string, trigger?: LOG_TRIGGER) {
@@ -50,7 +52,7 @@ export class Log {
   getSubContext(context: string): Log {
     let subContext = this._subContexts.get(context);
     if (!subContext) {
-      subContext = new Log(context, this.trigger, this.pid);
+      subContext = new Log(context, this.trigger, this.pid, false);
       this._subContexts.set(context, subContext);
     }
 
@@ -58,6 +60,7 @@ export class Log {
   }
 
   exception(exception: AbstractException) {
+    this._data.set('status', 'FAIL');
     this._data.set('exception', exception.details());
   }
 
@@ -65,18 +68,22 @@ export class Log {
     const entries = Array.from(this._data.entries());
     const data = Object.fromEntries(entries);
     Array.from(this._subContexts.values()).forEach((subContext) => {
-      data[subContext.context] = subContext.data();
+      const { pid, createdAt, ...subContextData } = subContext.data();
+      data[subContext.context] = subContextData;
     });
 
     data['elapsedTime'] = this._stopwatch.end();
-    data['createdAt'] = this.createdAt.format();
-    data['pid'] = this.pid.value;
+    if (this.isMainContext) data['createdAt'] = this.createdAt.format();
+    if (this.isMainContext) data['pid'] = this.pid.value;
+    if (this.isMainContext) data['context'] = this.context;
+    if (this.isMainContext) data['trigger'] = this.trigger;
+    if (this.isMainContext && !data['status']) data['status'] = 'SUCCESS';
 
     return data;
   }
 
   private _setNewSubContext(context: string, key: string, value: TJsonValue) {
-    const log = new Log(context, this.trigger, this.pid);
+    const log = new Log(context, this.trigger, this.pid, false);
     log.set(key, value);
     this._subContexts.set(context, log);
   }
