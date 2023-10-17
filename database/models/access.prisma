@@ -1,0 +1,64 @@
+model Permissions {
+    id              String            @id
+    name            String            @unique
+    createdAt       DateTime          @default(now())
+    updatedAt       DateTime          @default(now())
+    deletedAt       DateTime?
+    RolePermissions RolePermissions[]
+    UserPermissions UserPermissions[]
+
+    @@map("permissions")
+}
+
+model Roles {
+    id              String            @id
+    name            String            @unique
+    description     String
+    createdAt       DateTime          @default(now())
+    updateAt        DateTime          @default(now())
+    deletedAt       DateTime?
+    RolePermissions RolePermissions[]
+    UserRoles       UserRoles[]
+
+    @@map("roles")
+}
+
+model RolePermissions {
+    roleId       String
+    permissionId String
+    role         Roles       @relation(fields: [roleId], references: [id])
+    permissions  Permissions @relation(fields: [permissionId], references: [id])
+
+    @@id([roleId, permissionId])
+    @@map("role_permissions")
+}
+
+model UserRoles {
+    roleId String
+    userId String
+    role   Roles  @relation(fields: [roleId], references: [id])
+    user   Users  @relation(fields: [userId], references: [id])
+
+    @@id([roleId, userId])
+    @@map("user_roles")
+}
+
+model UserPermissions {
+    permissionId String
+    userId       String
+    status       Boolean
+    permissions  Permissions @relation(fields: [permissionId], references: [id])
+    user         Users       @relation(fields: [userId], references: [id])
+
+    @@id([permissionId, userId])
+    @@map("user_permissions")
+}
+
+//@relations
+model Users {
+    id              String            @id
+    userRoles       UserRoles[]
+    userPermissions UserPermissions[]
+
+    @@map("users")
+}
